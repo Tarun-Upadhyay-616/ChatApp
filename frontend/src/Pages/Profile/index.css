@@ -1,0 +1,10 @@
+.rounded-cicle{
+    border-radius: 50%;
+    margin: 5px;
+    width: 120px;
+    height: 180px;
+    font-size: 150px;
+}
+.container{
+    height: 250px;
+}
