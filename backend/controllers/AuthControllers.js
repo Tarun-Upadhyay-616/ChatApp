@@ -16,9 +16,6 @@ export const signup = async (req, res) => {
         const token = jwt.sign({ email, id: user.id }, process.env.JWT_KEY, { expiresIn: '7d' })
         const isProduction = process.env.NODE_ENV === 'production';
         res.cookie('jwt', token, {
-            httpOnly: true,
-            secure: isProduction,
-            sameSite: isProduction ? "None" : "Lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
         const mailOptions = {
@@ -63,9 +60,6 @@ export const login = async (req, res) => {
         const token = jwt.sign({ email, id: user.id }, process.env.JWT_KEY, { expiresIn: '7d' })
         const isProduction = process.env.NODE_ENV === 'production';
         res.cookie('jwt', token, {
-            httpOnly: true,
-            secure: isProduction,
-            sameSite: isProduction ? "None" : "Lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
         return res.status(200).json({
@@ -200,9 +194,7 @@ export const verifymail = async (req, res) => {
 export const logout = async (req, res) => {
     try {
         res.clearCookie('jwt', {
-            httpOnly: true,
-            // secure: true,
-            sameSite: "None",
+            maxAge:1,
         })
 
         return res.status(200).json({

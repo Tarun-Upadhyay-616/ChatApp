@@ -15,7 +15,7 @@ const dburl = process.env.DATABASE_URL
 const _dirname = path.resolve()
 const app = express()
 app.use(cors({
-    origin: [process.env.ORIGIN],
+    origin: process.env.ORIGIN,
     methods: ["GET","POST","PUT","PATCH","DELETE"],
     credentials: true
 }))
@@ -39,6 +39,6 @@ mongoose.connect(dburl)
         console.log(err.message);
     })
 const server = app.listen(port,()=>{
-    console.log(`App listening on http://localhost:${port}`)
+    console.log(`App listening on port ${port}`)
 })
 setupSocket(server)
