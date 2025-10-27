@@ -9,7 +9,7 @@ const Chat_Header = ({ onProfileClick }) => {
   const { closeChat, selectedChatData } = useAppStore();
 
   return (
-    <div className='flex h-[10vh] min-h-[70px] items-center justify-between p-3 bg-transparent px-4'>
+    <div className='flex min-h-[70px] items-center justify-between p-3 bg-transparent px-4'>
       <div className="flex items-center gap-4">
 
         <button
