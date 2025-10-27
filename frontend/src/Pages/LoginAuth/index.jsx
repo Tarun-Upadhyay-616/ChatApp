@@ -69,7 +69,7 @@ const LoginAuth = () => {
   return (
     <>
       <ToastContainer theme='dark' position='bottom-right' autoClose={3000}/>
-      <div className="min-h-[90vh] flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
+      <div className="min-h-[100vh] flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
         <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-2xl rounded-lg overflow-hidden p-8 md:p-12">
 
     
