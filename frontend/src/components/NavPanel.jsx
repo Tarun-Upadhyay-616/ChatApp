@@ -71,7 +71,7 @@ const NavPanel = () => {
                        border-r border-white/10
                        ${selectedChatData
                         ? 'hidden md:flex md:w-[25vw] md:min-w-[300px] md:max-w-[320px]'
-                        : 'w-full md:w-[25vw] md:min-w-[300px] md:max-w-[320px]'
+                        : 'w-full md:w-[25vw] md:min-w-[300px] md:max-w-[320px] h-[100vh]'
         }`}
       >
         <header className="flex items-center justify-between h-[10vh] min-h-[70px] px-4">

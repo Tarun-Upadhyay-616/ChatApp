@@ -80,7 +80,7 @@ const ResetPass = () => {
   return (
     <>
       <ToastContainer theme="dark" position="bottom-right" />
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
+      <div className="min-h-[90vh] flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
         <div className="w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg space-y-6">
 
           {stage === 'email' ? (

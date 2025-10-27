@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { apiClient } from '../../api-client';
+import { apiClient } from '../../api-client.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAppStore } from './../../Store/index.js';
@@ -69,7 +69,7 @@ const LoginAuth = () => {
   return (
     <>
       <ToastContainer theme='dark' position='bottom-right' autoClose={3000}/>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
+      <div className="min-h-[90vh] flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
         <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-2xl rounded-lg overflow-hidden p-8 md:p-12">
 
     

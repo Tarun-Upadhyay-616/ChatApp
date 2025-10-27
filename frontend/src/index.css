@@ -6,7 +6,16 @@
   font-style: normal;
 }
 
+html, body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
 
+#root {
+  height: 100%;
+  width: 100%;
+}
 ::-webkit-scrollbar {
   background: transparent;
   border: 2px solid rgb(0, 0, 0,0.1);
