@@ -12,10 +12,10 @@ const ProfileInfo = () => {
   const navigate = useNavigate()
   const handlelogout = async () => {
     try {
-      const response = await apiClient.post('/logout', { withCredentials: true })
+      const response = await apiClient.post('/logout', {},{ withCredentials: true })
       if (response.status===200) {
-        setUserInfo(undefined)
         navigate('/auth/register')
+        setUserInfo(null)
       }
     } catch (error) {
       console.log({error})

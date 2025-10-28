@@ -20,10 +20,27 @@ export const SocketProvider = ({ children }) => {
                 console.log("Connected to socket server")
             })
 
+            
             const handleReceiveMessage = (message)=>{
-                const {selectedChatData,selectedChatType,addMessage} = useAppStore.getState()
-                if(selectedChatType !== undefined && (selectedChatData._id === message.sender._id || selectedChatData._id === message.recipient._id)){
+                const {
+                    selectedChatData,
+                    selectedChatType,
+                    addMessage,
+                    triggerNavPanelRefresh 
+                } = useAppStore.getState()
+                
+                
+                const isChatOpen = selectedChatType !== undefined && 
+                                   selectedChatData &&
+                                   (selectedChatData._id === message.sender._id || 
+                                    selectedChatData._id === message.recipient._id);
+
+                if(isChatOpen){
+                   
                     addMessage(message)
+                } else {
+    
+                    triggerNavPanelRefresh()
                 }
             }
             socket.current.on("receiveMessage",handleReceiveMessage)

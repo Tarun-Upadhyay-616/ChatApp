@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useAppStore } from './../Store/index';
 import { FaSearch } from "react-icons/fa";
-import Lottie from 'react-lottie';
-import { animationoptions } from '../utils/utils.js';
+import { useAppStore } from './../Store/index';
 import { apiClient2 } from '../api-client.js';
 import { apiClient3 } from '../api-client.js';
 import ProfileInfo from './ProfileInfo';
@@ -11,12 +9,10 @@ import { HOST_ } from '../Constants.js';
 import { toast, ToastContainer } from 'react-toastify';
 import { getColor } from './../utils/utils';
 import ContactList from './ContactList.jsx';
-import Logo from "../assets/logo.png" 
 
 const NavPanel = () => {
-  const { userInfo, selectedChatData, setSelectedChatData, setSelectedChatType, lastMessageTrigger } = useAppStore();
+  const { directMessagesContacts, setDirectMessagesContacts, selectedChatData, setSelectedChatData, setSelectedChatType, lastMessageTrigger } = useAppStore();
   const [searchedContacts, setSearchedContacts] = useState([]);
-  const [recentChats, setRecentChats] = useState([]);
   const [loadingChats, setLoadingChats] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
 
@@ -25,8 +21,9 @@ const NavPanel = () => {
       try {
         setLoadingChats(true);
         const response = await apiClient3.get('/api/contacts/get-contacts-for-dm', { withCredentials: true });
+        console.log("API Response for contacts:", response.data.contacts);
         if (response.data.contacts) {
-          setRecentChats(response.data.contacts);
+          setDirectMessagesContacts(response.data.contacts);
         }
       } catch (error) {
         console.error("Failed to fetch recent chats", error);
@@ -38,7 +35,7 @@ const NavPanel = () => {
     if (!isSearching) {
       getChats();
     }
-  }, [isSearching]);
+  }, [isSearching, lastMessageTrigger]);
 
   const searchContacts = async (searchTerm) => {
     try {
@@ -70,11 +67,11 @@ const NavPanel = () => {
       <aside className={`flex flex-col h-full bg-transparent text-gray-100 transition-all duration-300
                        border-r border-white/10
                        ${selectedChatData
-                        ? 'hidden md:flex md:w-[25vw] md:min-w-[300px] md:max-w-[320px]'
-                        : 'w-full md:w-[25vw] md:min-w-[300px] md:max-w-[320px] h-[100vh]'
+          ? 'hidden md:flex md:w-[25vw] md:min-w-[300px] md:max-w-[320px]'
+          : 'w-full md:w-[25vw] md:min-w-[300px] md:max-w-[320px]'
         }`}
       >
-        <header className="flex items-center justify-between min-h-[70px] px-4">
+        <header className="flex items-center justify-between h-[10vh] min-h-[70px] px-4">
           <div className="flex items-center gap-2 text-3xl justify-center w-100 bbh-sans-bartle-regular text-[#3b0037] bg-gray-500/20 rounded-5">
             Synk
           </div>
@@ -84,15 +81,18 @@ const NavPanel = () => {
           <div className="relative">
             <input
               type="search"
-              className="block w-full rounded-lg p-3 pl-10 border border-white/10 bg-black/20 text-white 
+              className="block w-full rounded-lg py-2 pl-10 border border-white/10 bg-black/20 text-white 
                          placeholder-gray-400 outline-none focus:ring-1 focus:ring-purple-400"
               placeholder="Search User..."
               onChange={(e) => searchContacts(e.target.value)}
             />
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <FaSearch className="text-gray-400" />
+            </div>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-2 space-y-1 scroll-auto">
+        <div className="flex-1 overflow-y-auto px-2 space-y-1 scroll-auto max-h-[50vh]">
           {isSearching ? (
             searchedContacts.length > 0 ? (
               searchedContacts.map((contact) => (
@@ -122,19 +122,15 @@ const NavPanel = () => {
           ) : (
             loadingChats ? (
               <div className="text-center text-gray-400 mt-8">Loading chats...</div>
-            ) : recentChats.length > 0 ? (
-              recentChats.map(chat => 
-              <ContactList key={chat._id} chat={chat} />)
             ) : (
-              <div className="text-center text-gray-400 mt-8 px-4">
-                <p>Your chat history is empty.</p>
-                <p className="text-xs mt-1">Start a new chat using the search bar above.</p>
+              <div className='max-h-[50vh] overflow-y-auto scrollbar-hidden px-1 mx-1'>
+                <ContactList contacts={directMessagesContacts} />
               </div>
             )
           )}
         </div>
 
-        
+
         <div className='mt-auto p-2 border-t border-white/10'>
           <ProfileInfo />
         </div>

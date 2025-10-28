@@ -56,6 +56,8 @@ export const getRecentChats = async (req, res, next) => {
                       },
                   },
                   lastMessageTime: { $first: "$timestamp" },
+                  lastMessage: { $first: "$content" },
+                  lastMessageSender: { $first: "$sender" }
               },
           },
           {
@@ -74,6 +76,8 @@ export const getRecentChats = async (req, res, next) => {
               $project: {
                   _id: 1,
                   lastMessageTime: 1,
+                  lastMessage: 1,
+                  lastMessageSender: 1,
                   email: "$contactInfo.email",
                   firstname: "$contactInfo.firstname",
                   lastname: "$contactInfo.lastname",

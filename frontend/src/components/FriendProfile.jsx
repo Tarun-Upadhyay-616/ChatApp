@@ -16,7 +16,7 @@ const FriendProfile = ({ isOpen, onClose }) => {
         <DialogBackdrop
           className="fixed inset-0 bg-black/60 backdrop-blur-sm"
         />
-        
+
         <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child
@@ -30,19 +30,22 @@ const FriendProfile = ({ isOpen, onClose }) => {
               <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl 
                                     bg-gray-800/80 backdrop-blur-lg border border-white/10 p-6 
                                     text-left align-middle shadow-xl transition-all">
-                
+
                 <div className="flex flex-col items-center text-white">
-                  <div className="mt-4">
+                  <div className="flex-shrink-0 h-32 w-32 rounded-full overflow-hidden mt-4">
                     {selectedChatData.image ? (
-                      <Avatar src={`${HOST_}/${selectedChatData.image}`} sx={{ width: 120, height: 120 }} />
+                      <Avatar src={`${HOST_}/${selectedChatData.image}`} className='w-100 h-100' />
                     ) : (
-                      <Avatar sx={{ width: 120, height: 120, bgcolor: getColor(selectedChatData.color), fontSize: '3rem' }}>
-                        {selectedChatData.firstname ? selectedChatData.firstname.charAt(0).toUpperCase() : 'C'}
-                      </Avatar>
+                      <div className={`uppercase h-full w-full text-5xl border-[1px] flex items-center justify-center rounded-full ${getColor(selectedChatData.color)}`} >
+                        {selectedChatData.firstname
+                          ? selectedChatData.firstname.split("").shift()
+                          : selectedChatData.email.split("").shift()
+                        }
+                      </div>
                     )}
                   </div>
 
-                  <h2 className="mt-6 text-2xl font-semibold">
+                  <h2 className="mt-3 text-2xl font-semibold">
                     {`${selectedChatData.firstname} ${selectedChatData.lastname}`}
                   </h2>
 

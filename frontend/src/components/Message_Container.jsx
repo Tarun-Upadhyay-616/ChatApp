@@ -24,6 +24,7 @@ const Message_Container = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
   const handleAttachmentClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click()
@@ -47,7 +48,6 @@ const Message_Container = () => {
             };
             
             socket.emit("sendMessage", messageData);
-            addMessage(messageData);
         }
       }
     } catch (error) {
@@ -70,7 +70,6 @@ const Message_Container = () => {
       timestamp: new Date(),
     };
     socket.emit("sendMessage", messageData);
-    addMessage(messageData)
     setMessage("");
     setEmojiPickerOpen(false);
   };
@@ -83,7 +82,7 @@ const Message_Container = () => {
   };
 
   return (
-    <div className='h-auto min-h-[80px] w-full bg-transparent flex items-center px-4 py-2 gap-2 text-white border-t border-gray-700'>
+    <div className='h-auto min-h-[80px] w-full bg-transparent flex items-center justify-center px-2 gap-2 text-white border-t border-gray-700'>
       <div className="flex-1 flex bg-transparent border-2 border-gray-500 rounded-xl items-center px-2">
         <div className="relative">
           <button

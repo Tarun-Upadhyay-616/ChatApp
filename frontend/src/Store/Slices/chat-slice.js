@@ -3,10 +3,14 @@ export const createChatSlice = (set, get) => ({
     selectedChatData: undefined,
     selectedChatMessages: [],
     directMessagesContacts: [],
+    lastMessageTrigger: 0, 
     setSelectedChatMessages: (selectedChatMessages) => set({ selectedChatMessages }),
     setSelectedChatType: (selectedChatType) => set({ selectedChatType }),
     setSelectedChatData: (selectedChatData) => set({ selectedChatData }),
     setDirectMessagesContacts: (directMessagesContacts) => set({ directMessagesContacts }),
+    
+    triggerNavPanelRefresh: () => set({ lastMessageTrigger: new Date().getTime() }),
+
     closeChat: () =>
         set({
             selectedChatData: undefined,
@@ -31,6 +35,7 @@ export const createChatSlice = (set, get) => ({
                             : message.sender._id,
                 },
             ],
+            lastMessageTrigger: new Date().getTime(), 
         });
     },
 });

@@ -9,7 +9,7 @@ const Chat_Header = ({ onProfileClick }) => {
   const { closeChat, selectedChatData } = useAppStore();
 
   return (
-    <div className='flex min-h-[70px] items-center justify-between p-3 bg-transparent px-4'>
+    <div className='flex h-[10vh] min-h-[70px] items-center justify-between p-3 bg-transparent px-4'>
       <div className="flex items-center gap-4">
 
         <button
@@ -21,13 +21,16 @@ const Chat_Header = ({ onProfileClick }) => {
         </button>
 
         <div onClick={onProfileClick} className="flex items-center gap-4 cursor-pointer">
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 h-12 w-12 rounded-full overflow-hidden">
             {selectedChatData.image ? (
-              <Avatar src={`${HOST_}/${selectedChatData.image}`} sx={{ width: 48, height: 48 }} />
+              <Avatar src={`${HOST_}/${selectedChatData.image}`} className='w-100 h-100' />
             ) : (
-              <Avatar sx={{ width: 48, height: 48, bgcolor: getColor(selectedChatData.color), fontSize: '1.25rem' }}>
-                {selectedChatData.firstname ? selectedChatData.firstname.charAt(0).toUpperCase() : 'C'}
-              </Avatar>
+              <div className={`uppercase h-12 w-12 text-lg border-[1px] flex items-center justify-center rounded-5 ${getColor(selectedChatData.color)} `} >
+                {selectedChatData.firstname
+                  ? selectedChatData.firstname.split("").shift()
+                  : selectedChatData.email.split("").shift()
+                }
+              </div>
             )}
           </div>
           <div className='flex flex-col text-white'>

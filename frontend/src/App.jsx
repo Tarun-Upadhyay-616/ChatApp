@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom' 
 import LoginAuth from './Pages/LoginAuth/index.jsx'
 import Chat from './Pages/Chat/index.jsx'
 import Profile from './Pages/Profile/index.jsx'
@@ -31,30 +31,38 @@ const App = () => {
   const { setUserInfo } = useAppStore()
   const [loading, setLoading] = useState(true)
   const [showSplash, setShowSplash] = useState(true)
+
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const isAuthRoute = currentPath === "/auth/login" || currentPath === "/auth/register";
+
   useEffect(() => {
     const splashTimer = setTimeout(() => {
       setShowSplash(false);
     }, 3000);
     return () => clearTimeout(splashTimer);
   }, []);
+
   useEffect(() => {
     const getUserData = async () => {
       try {
         const response = await apiClient.get('/user-info', { withCredentials: true })
         if (response.status === 200 && response.data.id) {
-          setUserInfo(response.data) 
+          await setUserInfo(response.data)
+        } else {
           setUserInfo(undefined)
         }
       } catch (error) {
         console.log("No active session: ", error.message)
-        setUserInfo(undefined) 
+        setUserInfo(undefined)
       } finally {
         setLoading(false)
       }
     }
     getUserData()
-  }, [setUserInfo])
-  if (showSplash) {
+  }, [])
+  
+  if (showSplash && isAuthRoute) {
     return <SplashScreen />;
   }
   if (loading) {
@@ -64,24 +72,23 @@ const App = () => {
   }
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/auth/login"
-            element={
-              <AuthRoute>
-                <LoginAuth />
-              </AuthRoute>
-            }
-          />
-          <Route path="/auth/register" element={<AuthRoute><RegisterAuth /></AuthRoute>} />
-          <Route path="/auth/reset-password" element={<ResetPass />} />
-          <Route path="/auth/verify-email" element={<VerifyEmail />} />
-          <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
-          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-          <Route path="*" element={<Navigate to="/auth/register" />} />
-        </Routes>
-      </BrowserRouter>
+
+      <Routes>
+        <Route
+          path="/auth/login"
+          element={
+            <AuthRoute>
+              <LoginAuth />
+            </AuthRoute>
+          }
+        />
+        <Route path="/auth/register" element={<AuthRoute><RegisterAuth /></AuthRoute>} />
+        <Route path="/auth/reset-password" element={<ResetPass />} />
+        <Route path="/auth/verify-email" element={<VerifyEmail />} />
+        <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path="*" element={<Navigate to="/auth/register" />} />
+      </Routes>
     </>
   )
 }

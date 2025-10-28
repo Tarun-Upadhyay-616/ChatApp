@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { apiClient } from '../../api-client.js'; //
-import { ToastContainer, toast } from 'react-toastify'; //
-import { useNavigate } from 'react-router-dom'; //
+import { apiClient } from '../../api-client.js'; 
+import { ToastContainer, toast } from 'react-toastify'; 
+import { useNavigate } from 'react-router-dom'; 
 
 const ResetPass = () => {
   const [stage, setStage] = useState('email');
-  const [email, setEmail] = useState(''); //
-  const [password, setPassword] = useState(''); //
+  const [email, setEmail] = useState(''); 
+  const [password, setPassword] = useState(''); 
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +40,7 @@ const ResetPass = () => {
 
     setIsLoading(true);
     try {
-      const response = await apiClient.post('/resetotp', { email }, { withCredentials: true }); //
+      const response = await apiClient.post('/resetotp', { email }, { withCredentials: true }); 
       if (response.data.success) {
         toast.success("An OTP has been sent to your email!");
         setStage('otp');
