@@ -8,7 +8,12 @@ import { IoMdClose, IoMdCloudDownload } from "react-icons/io";
 
 const Chat_Container = () => {
   const scrollRef = useRef(null);
-  const { selectedChatData, selectedChatMessages, setSelectedChatMessages } = useAppStore();
+  const {
+    selectedChatData,
+    selectedChatMessages,
+    setSelectedChatMessages,
+    triggerNavPanelRefresh 
+  } = useAppStore();
 
   useEffect(() => {
     const getMessages = async () => {
@@ -16,6 +21,7 @@ const Chat_Container = () => {
         const response = await apiClient3.post('/api/message/getMessages', { id: selectedChatData._id }, { withCredentials: true });
         if (response.data.messages) {
           setSelectedChatMessages(response.data.messages);
+          triggerNavPanelRefresh()
         }
       } catch (error) {
         console.error("Failed to fetch messages:", error);
@@ -24,7 +30,7 @@ const Chat_Container = () => {
     if (selectedChatData?._id) {
       getMessages();
     }
-  }, [selectedChatData, setSelectedChatMessages]);
+  }, [selectedChatData, setSelectedChatMessages,triggerNavPanelRefresh]);
 
   const [showImage, setShowImage] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
@@ -54,9 +60,9 @@ const Chat_Container = () => {
 
   useEffect(() => {
     if (scrollRef.current) {
-      setTimeout(()=>{
+      setTimeout(() => {
         scrollRef.current.scrollIntoView({ behavior: "smooth" });
-      },0)
+      }, 0)
     }
   }, [selectedChatMessages]);
 
@@ -140,8 +146,8 @@ const Chat_Container = () => {
   };
 
   return (
-    <div className='flex-1 overflow-y-auto bg-transparent'>
-      <div className="max-w-4xl mx-auto p-5">
+    <div className='flex-1 overflow-y-auto bg-transparent max-h-auto'>
+      <div className="max-w-4xl p-2">
         {renderMessages()}
         <div ref={scrollRef} />
       </div>
@@ -151,7 +157,7 @@ const Chat_Container = () => {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center backdrop-blur-3xl bg-gray-500/80 p-4"
           onClick={() => {
             setShowImage(false);
-              setImageUrl(null);
+            setImageUrl(null);
           }}
         >
           <img
@@ -178,7 +184,7 @@ const Chat_Container = () => {
               <IoMdClose />
             </button>
           </div>
-          
+
         </div>
       )}
     </div>

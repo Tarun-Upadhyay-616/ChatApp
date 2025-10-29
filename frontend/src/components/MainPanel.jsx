@@ -11,13 +11,21 @@ const MainPanel = () => {
 
   return (
     <div className="flex-1 flex flex-col h-full bg-transparent">
-      <Chat_Header onProfileClick={() => setIsFriendProfileOpen(true)} />
-      <Chat_Container />
-      <Message_Container />
+      <div className="flex-shrink-0">
+        <Chat_Header onProfileClick={() => setIsFriendProfileOpen(true)} />
+      </div>
 
-      <FriendProfile 
-        isOpen={isFriendProfileOpen} 
-        onClose={() => setIsFriendProfileOpen(false)} 
+      <div className="flex-1 overflow-y-auto">
+        <Chat_Container />
+      </div>
+
+      <div className="flex-shrink-0">
+        <Message_Container />
+      </div>
+
+      <FriendProfile
+        isOpen={isFriendProfileOpen}
+        onClose={() => setIsFriendProfileOpen(false)}
       />
     </div>
   );

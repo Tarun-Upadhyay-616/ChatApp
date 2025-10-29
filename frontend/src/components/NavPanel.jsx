@@ -65,11 +65,10 @@ const NavPanel = () => {
     <>
       <ToastContainer theme="dark" position="bottom-right" />
       <aside className={`flex flex-col h-full bg-transparent text-gray-100 transition-all duration-300
-                       border-r border-white/10
-                       ${selectedChatData
+                      border-r border-white/10
+                      ${selectedChatData
           ? 'hidden md:flex md:w-[25vw] md:min-w-[300px] md:max-w-[320px]'
-          : 'w-full md:w-[25vw] md:min-w-[300px] md:max-w-[320px]'
-        }`}
+          : 'w-full md:w-[25vw] md:min-w-[300px] md:max-w-[320px]'}`}
       >
         <header className="flex items-center justify-between h-[10vh] min-h-[70px] px-4">
           <div className="flex items-center gap-2 text-3xl justify-center w-100 bbh-sans-bartle-regular text-[#3b0037] bg-gray-500/20 rounded-5">
@@ -77,7 +76,7 @@ const NavPanel = () => {
           </div>
         </header>
 
-        <div className="p-4 pt-0">
+        <div className="p-4 pt-0 ">
           <div className="relative">
             <input
               type="search"
@@ -92,7 +91,7 @@ const NavPanel = () => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-2 space-y-1 scroll-auto max-h-[50vh]">
+        <div className="flex-1 overflow-y-auto px-2 space-y-1">
           {isSearching ? (
             searchedContacts.length > 0 ? (
               searchedContacts.map((contact) => (
@@ -123,15 +122,13 @@ const NavPanel = () => {
             loadingChats ? (
               <div className="text-center text-gray-400 mt-8">Loading chats...</div>
             ) : (
-              <div className='max-h-[50vh] overflow-y-auto scrollbar-hidden px-1 mx-1'>
-                <ContactList contacts={directMessagesContacts} />
-              </div>
+              <ContactList contacts={directMessagesContacts} />
             )
           )}
         </div>
 
 
-        <div className='mt-auto p-2 border-t border-white/10'>
+        <div className='mt-auto p-2 border-t border-white/10 flex-shrink-0'>
           <ProfileInfo />
         </div>
       </aside>
