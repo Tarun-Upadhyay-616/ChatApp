@@ -1,7 +1,6 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useState } from 'react';
-// Logo import removed
 import { apiClient } from '../../api-client';
 import { useNavigate, Link } from 'react-router-dom';
 
