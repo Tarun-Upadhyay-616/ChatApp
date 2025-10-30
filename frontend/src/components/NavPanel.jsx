@@ -7,7 +7,7 @@ import ProfileInfo from './ProfileInfo';
 import Avatar from '@mui/material/Avatar';
 import { HOST_ } from '../Constants.js';
 import { toast, ToastContainer } from 'react-toastify';
-import { getColor } from './../utils/utils';
+import { getColor } from '../utils/utils.js';
 import ContactList from './ContactList.jsx';
 
 const NavPanel = () => {
@@ -80,7 +80,7 @@ const NavPanel = () => {
           <div className="relative">
             <input
               type="search"
-              className="block w-full rounded-lg py-2 pl-10 border border-white/10 bg-black/20 text-white 
+              className="block w-full rounded-lg py-2 pl-10 pr-2 border border-white/10 bg-black/20 text-white 
                          placeholder-gray-400 outline-none focus:ring-1 focus:ring-purple-400"
               placeholder="Search User..."
               onChange={(e) => searchContacts(e.target.value)}
@@ -97,12 +97,15 @@ const NavPanel = () => {
               searchedContacts.map((contact) => (
                 <div key={contact._id} className="flex gap-3 items-center cursor-pointer p-3 rounded-lg hover:bg-white/10" onClick={() => selectNewContact(contact)}>
                   <div className='flex-shrink-0'>
-                    {contact?.image ? (
+                    {contact.image ? (
                       <Avatar src={`${HOST_}/${contact.image}`} sx={{ width: 40, height: 40 }} />
                     ) : (
-                      <Avatar sx={{ width: 40, height: 40, bgcolor: getColor(contact?.color), fontSize: '1rem' }}>
-                        {contact?.firstname ? contact.firstname.charAt(0).toUpperCase() : 'U'}
-                      </Avatar>
+                      <div className={`uppercase h-12 w-12 text-lg border-[1px] flex items-center justify-center rounded-5 ${getColor(contact.color)} `} >
+                        {contact.firstname
+                          ? contact.firstname.split("").shift()
+                          : contact.email.split("").shift()
+                        }
+                      </div>
                     )}
                   </div>
                   <div className="flex flex-col overflow-hidden">

@@ -12,13 +12,12 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 import { HOST_ } from '../../Constants.js';
 import Avatar from '@mui/material/Avatar';
-// import Avatar from "react-avatar";
 const Profile = () => {
   const { userInfo, setUserInfo } = useAppStore();
   const [firstname, setFirstname] = useState("")
   const [lastname, setLastname] = useState("")
   const [image, setImage] = useState(null)
-  const [hovered, setHovered] = useState(false)
+  const [hovered, setHovered] = useState(false) 
   const [selectedColor, setSelectedColor] = useState(0)
   const fileInputRef = useRef(null)
   const navigate = useNavigate();
@@ -105,14 +104,18 @@ const Profile = () => {
   }
   return (
     <div className='flex items-center justify-center flex-col gap-10 h-[100vh] bg-[#1b1c24] w-[100vw]'>
-      <div className="flex flex-col gap-10 w-[80vw] md:w-max">
+     
+      <div className="flex flex-col gap-10 w-[90vw] md:w-max">
         <div>
           <IoArrowBack className='text-4xl lg:text-6xl text-white cursor-pointer' onClick={backToChat}/>
         </div>
-        <div class="grid grid-cols-2">
-          <div class="h-full w-32 md:w-48 md:h-48 relative flex items-center justify-center "
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          
+          
+          <div 
+            className="h-32 w-32 md:w-48 md:h-48 relative flex items-center justify-center mx-auto" 
+            onClick={() => setHovered(!hovered)} 
           >
             <div className='h-32 w-32 md:w-48 md:h-48 rounded-full overflow-hidden flex items-center justify-center' >
               
@@ -128,37 +131,53 @@ const Profile = () => {
               )}
               
             </div>
-            {hovered && <div className='absolute inset-0 flex items-center justify-center rounded-full bg-black/50 cursor-pointer '
-            onClick={image ? handleDeleteImage : handleFileInputClick} >
-              {image ?
-                <FaTrash className='text-white text-3xl cursor-pointer ' /> :
-                <FaPlus className='text-white text-3xl cursor-pointer ' />}
-            </div>}
+            {hovered && (
+              <div 
+                className='absolute inset-0 flex items-center justify-center rounded-full bg-black/50 cursor-pointer'
+
+                onClick={(e) => {
+                  e.stopPropagation(); 
+                  if (image) {
+                    handleDeleteImage();
+                  } else {
+                    handleFileInputClick();
+                  }
+                  setHovered(false); 
+                }} 
+              >
+                {image ?
+                  <FaTrash className='text-white text-3xl cursor-pointer ' /> :
+                  <FaPlus className='text-white text-3xl cursor-pointer ' />}
+              </div>
+            )}
             <input type="file" ref={fileInputRef} className='hidden' onChange={handleImageChange} name = "profile-image" accept='.png ,.jpg, .jpeg, .svg ,.webp' />
           </div>
-          <div className='min-w-32 md:min-w-64 flex-col gap-5 text-white items-center justify-center'>
-            <div class="w-full mb-1">
-              <input type="email" disabled value={userInfo.email} className='rounded-lg p-6 bg-[#2c2e3b] border-none w-[35ch] ' />
+
+          <div className='w-full flex-col gap-5 text-white items-center justify-center'>
+            <div className="w-full mb-1">
+
+              <input type="email" disabled value={userInfo.email} className='rounded-lg p-6 bg-[#2c2e3b] border-none w-full' />
             </div>
-            <div class="w-full mb-1">
+            <div className="w-full mb-1">
               <input type="name" 
               value={firstname} 
-              className='rounded-lg p-6 bg-[#2c2e3b] border-none w-[35ch]'
+              className='rounded-lg p-6 bg-[#2c2e3b] border-none w-full'
               placeholder='First Name'
               onChange={(e)=> setFirstname(e.target.value)}
               maxLength={8}
               />
             </div>
-            <div class="w-full mb-3">
+            <div className="w-full mb-3">
+
               <input type="text" 
               value={lastname} 
-              className='rounded-lg p-6 bg-[#2c2e3b] border-none w-[35ch]'
+              className='rounded-lg p-6 bg-[#2c2e3b] border-none w-full'
               placeholder='Last Name'
               onChange={(e)=> setLastname(e.target.value)}
               maxLength={10}
               />
             </div>
-            <div class="w-full flex gap-4">
+            <div className="w-full flex gap-4">
                 {
                   colors.map((color,index)=>
                      (<div
