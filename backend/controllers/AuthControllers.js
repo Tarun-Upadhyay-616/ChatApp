@@ -18,13 +18,6 @@ export const signup = async (req, res) => {
         res.cookie('jwt', token, {
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
-        const mailOptions = {
-            from: process.env.SENDER_MAIL,
-            to: email,
-            subject: "Welcome to Our Chat App",
-            text: `Hi ${email}\n Thanks for joining our chat app. You're all set to start chatting in real time.\n\n Happy Chatting!\n -Tarun Upadhyay`
-        }
-        await transport.sendMail(mailOptions);
         return res.status(201).json({
             user: {
                 id: user.id,
