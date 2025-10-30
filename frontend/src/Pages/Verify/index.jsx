@@ -49,7 +49,7 @@ const VerifyEmail = () => {
                         if (response.data.success) { 
                               toast.success("Email verified successfully!");
                 setTimeout(() => {
-                    navigate('/login'); 
+                    navigate('/auth/login'); 
                                   }, 2000);
             }
         } catch (err) {
